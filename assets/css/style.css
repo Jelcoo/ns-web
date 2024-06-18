@@ -19,7 +19,6 @@ nav {
 #disruptions_map {
     flex: 60%;
 }
-
 #map {
     height: calc(100vh - 4rem);
 }

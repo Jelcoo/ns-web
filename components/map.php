@@ -28,14 +28,35 @@
         }).addTo(map);
     });
 
+    function onEachFeature(feature, layer) {
+        // does this feature have a property named popupContent?
+        if (feature.properties && feature.properties.disruptionType) {
+            layer.bindTooltip(feature.properties.disruptionType);
+        }
+    }
+
     const disruptions = <?php echo json_encode($disruptions); ?>;
     disruptions.payload.features.forEach(feature => {
+        if (feature.properties.disruptionType != 'STORING') return;
+
         const disruptionStyle = {
-            "color": feature.properties.disruptionType == 'STORING' ? '#FF0000' : '#FF9900',
+            "color": '#FF0000',
             "weight": 5
         };
         L.geoJSON(feature, {
-            style: disruptionStyle
+            style: disruptionStyle,
+            onEachFeature: onEachFeature
         }).addTo(map);
+
+        const typeIcon = L.icon({
+            iconUrl: 'assets/img/icon/exclamation-red.svg',
+
+            iconAnchor:   [25, 30],
+            popupAnchor:  [0, 0]
+        });
+        
+        const featureCoords = feature.geometry.coordinates[0];
+        const middleCoords = featureCoords[Math.floor(featureCoords.length / 2)];
+        L.marker(middleCoords.reverse(), {icon: typeIcon}).addTo(map);
     });
 </script>
