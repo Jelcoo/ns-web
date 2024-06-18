@@ -9,3 +9,17 @@ nav {
     height: 4rem;
     background-color: pink;
 }
+
+#disruptions {
+    display: flex;
+}
+#disruptions_list {
+    flex: 40%;
+}
+#disruptions_map {
+    flex: 60%;
+}
+
+#map {
+    height: calc(100vh - 4rem);
+}
