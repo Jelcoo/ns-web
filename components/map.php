@@ -37,10 +37,8 @@
 
     const disruptions = <?php echo json_encode($disruptions); ?>;
     disruptions.payload.features.forEach(feature => {
-        if (feature.properties.disruptionType != 'STORING') return;
-
         const disruptionStyle = {
-            "color": '#FF0000',
+            "color": feature.properties.disruptionType == 'STORING' ? '#FF0000' : '#FF9900',
             "weight": 5
         };
         L.geoJSON(feature, {
@@ -49,7 +47,7 @@
         }).addTo(map);
 
         const typeIcon = L.icon({
-            iconUrl: 'assets/img/icon/exclamation-red.svg',
+            iconUrl: feature.properties.disruptionType == 'STORING' ? 'assets/img/icon/exclamation-red.svg' : 'assets/img/icon/person-digging-orange.svg',
 
             iconAnchor:   [25, 30],
             popupAnchor:  [0, 0]
