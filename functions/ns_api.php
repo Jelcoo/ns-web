@@ -10,7 +10,7 @@ function InitCurl($url) {
     return $ch;
 }
 
-function GetTrainTracks() {
+function GetTrainTracksGeo() {
     $ch = InitCurl("https://gateway.apiportal.ns.nl/Spoorkaart-API/api/v1/spoorkaart");
 
     $json = curl_exec($ch);
@@ -20,6 +20,15 @@ function GetTrainTracks() {
 }
 
 function GetTrainDisruptions() {
+    $ch = InitCurl("https://gateway.apiportal.ns.nl/reisinformatie-api/api/v3/disruptions");
+
+    $json = curl_exec($ch);
+    $data = json_decode($json, true);
+
+    return $data;
+}
+
+function GetTrainDisruptionsGeo() {
     $ch = InitCurl("https://gateway.apiportal.ns.nl/Spoorkaart-API/api/v1/storingen");
 
     $json = curl_exec($ch);

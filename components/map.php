@@ -1,8 +1,9 @@
 <?php
     require "./functions/ns_api.php";
 
-    $tracks = GetTrainTracks();
+    $tracksGeo = GetTrainTracksGeo();
     $disruptions = GetTrainDisruptions();
+    $disruptionsGeo = GetTrainDisruptionsGeo();
 ?>
 
 <div id="map"></div>
@@ -16,7 +17,7 @@
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    const tracks = <?php echo json_encode($tracks); ?>;
+    const tracks = <?php echo json_encode($tracksGeo); ?>;
     tracks.payload.features.forEach(feature => {
         const trackStyle = {
             "color": "#919191",
@@ -28,33 +29,29 @@
         }).addTo(map);
     });
 
-    function onEachFeature(feature, layer) {
-        // does this feature have a property named popupContent?
-        if (feature.properties && feature.properties.disruptionType) {
-            layer.bindTooltip(feature.properties.disruptionType);
-        }
-    }
-
     const disruptions = <?php echo json_encode($disruptions); ?>;
-    disruptions.payload.features.forEach(feature => {
+    const disruptionsGeo = <?php echo json_encode($disruptionsGeo); ?>;
+    disruptionsGeo.payload.features.forEach(disruptGeo => {
+        const disrupt = disruptions.find(disrupt => disrupt.id == disruptGeo.id);
+
         const disruptionStyle = {
-            "color": feature.properties.disruptionType == 'STORING' ? '#FF0000' : '#FF9900',
+            "color": disrupt.type == 'DISRUPTION' ? '#FF0000' : '#FF9900',
             "weight": 5
         };
-        L.geoJSON(feature, {
-            style: disruptionStyle,
-            onEachFeature: onEachFeature
+        L.geoJSON(disruptGeo, {
+            style: disruptionStyle
         }).addTo(map);
 
         const typeIcon = L.icon({
-            iconUrl: feature.properties.disruptionType == 'STORING' ? 'assets/img/icon/exclamation-red.svg' : 'assets/img/icon/person-digging-orange.svg',
+            iconUrl: disrupt.type == 'DISRUPTION'? 'assets/img/icon/exclamation.svg' : 'assets/img/icon/person-digging.svg',
 
-            iconAnchor:   [25, 30],
-            popupAnchor:  [0, 0]
+            riseOnHover: true,
+            iconAnchor: [25, 30],
+            popupAnchor: [0, 0]
         });
-        
-        const featureCoords = feature.geometry.coordinates[0];
+
+        const featureCoords = disruptGeo.geometry.coordinates[0];
         const middleCoords = featureCoords[Math.floor(featureCoords.length / 2)];
-        L.marker(middleCoords.reverse(), {icon: typeIcon}).addTo(map);
+        L.marker(middleCoords.reverse(), {icon: typeIcon}).addTo(map).bindTooltip("Hi");
     });
 </script>

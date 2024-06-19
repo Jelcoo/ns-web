@@ -22,3 +22,17 @@ nav {
 #map {
     height: calc(100vh - 4rem);
 }
+
+img[src*="exclamation"] {
+    background-color: #e60233;
+    border: 1px;
+    border-radius: 5px;
+    padding: 2px !important;
+}
+
+img[src*="person-digging"] {
+    background-color: #e69b33;
+    border: 1px;
+    border-radius: 5px;
+    padding: 2px !important;
+}
