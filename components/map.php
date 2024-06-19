@@ -45,13 +45,15 @@
         const typeIcon = L.icon({
             iconUrl: disrupt.type == 'DISRUPTION'? 'assets/img/icon/exclamation.svg' : 'assets/img/icon/person-digging.svg',
 
-            riseOnHover: true,
             iconAnchor: [25, 30],
             popupAnchor: [0, 0]
         });
 
         const featureCoords = disruptGeo.geometry.coordinates[0];
         const middleCoords = featureCoords[Math.floor(featureCoords.length / 2)];
-        L.marker(middleCoords.reverse(), {icon: typeIcon}).addTo(map).bindTooltip("Hi");
+        L.marker(middleCoords.reverse(), {
+            riseOnHover: true,
+            icon: typeIcon
+        }).addTo(map).bindTooltip("Hi");
     });
 </script>
