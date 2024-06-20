@@ -25,7 +25,7 @@
     startDate.style.display = 'none';
     endDate.style.display = 'none';
 
-    display.value = getUrlQuery('display');
+    display.value = getUrlQuery('display') ?? 'current';
     startDate.value = getUrlQuery('start');
     endDate.value = getUrlQuery('end');
     updateInputStyles(display.value);
