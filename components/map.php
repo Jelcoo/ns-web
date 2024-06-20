@@ -3,7 +3,12 @@
     require_once "./functions/ns_database.php";
 
     $tracksGeo = GetTrainTracksGeo();
-    $disruptions = GetTrainDisruptionsDb("2024-06-20 15:00", "2024-06-20 19:00");
+
+    if (!isset($_GET['start']) || !isset($_GET['end'])) {
+        $disruptions = GetActiveTrainDisruptions();
+    } else {
+        $disruptions = GetTrainDisruptionsBetween($_GET['start'], $_GET['end']);
+    }
 ?>
 
 <div id="map"></div>
