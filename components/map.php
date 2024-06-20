@@ -1,9 +1,9 @@
 <?php
     require_once "./functions/ns_api.php";
+    require_once "./functions/ns_database.php";
 
     $tracksGeo = GetTrainTracksGeo();
-    $disruptions = GetTrainDisruptions();
-    $disruptionsGeo = GetTrainDisruptionsGeo();
+    $disruptions = GetTrainDisruptionsDb("2024-06-20 15:00", "2024-06-20 19:00");
 ?>
 
 <div id="map"></div>
@@ -30,30 +30,33 @@
     });
 
     const disruptions = <?php echo json_encode($disruptions); ?>;
-    const disruptionsGeo = <?php echo json_encode($disruptionsGeo); ?>;
-    disruptionsGeo.payload.features.forEach(disruptGeo => {
-        const disrupt = disruptions.find(disrupt => disrupt.id == disruptGeo.id);
-
+    disruptions.forEach(disrupt => {
         const disruptionStyle = {
-            "color": disrupt.type == 'DISRUPTION' ? '#FF0000' : '#FF9900',
+            "color": '#FF0000',
             "weight": 5
         };
-        L.geoJSON(disruptGeo, {
-            style: disruptionStyle
-        }).addTo(map);
 
-        const typeIcon = L.icon({
-            iconUrl: disrupt.type == 'DISRUPTION'? 'assets/img/icon/exclamation.svg' : 'assets/img/icon/person-digging.svg',
+        const stationsGeo = JSON.parse(disrupt.stationsGeo);
+        stationsGeo.forEach(geo => {
+            geo.features.forEach(feature => {
+                L.geoJSON(feature, {
+                    style: disruptionStyle
+                }).addTo(map);
 
-            iconAnchor: [25, 30],
-            popupAnchor: [0, 0]
+                const typeIcon = L.icon({
+                    iconUrl: 'assets/img/icon/exclamation.svg',
+
+                    iconAnchor: [25, 30],
+                    popupAnchor: [0, 0]
+                });
+
+                const featureCoords = feature.geometry.coordinates;
+                const middleCoords = featureCoords[Math.floor(featureCoords.length / 2)];
+                L.marker(middleCoords.reverse(), {
+                    riseOnHover: true,
+                    icon: typeIcon
+                }).addTo(map).bindTooltip(`${disrupt.cause}\n${disrupt.timeStart}`);
+            })
         });
-
-        const featureCoords = disruptGeo.geometry.coordinates[0];
-        const middleCoords = featureCoords[Math.floor(featureCoords.length / 2)];
-        L.marker(middleCoords.reverse(), {
-            riseOnHover: true,
-            icon: typeIcon
-        }).addTo(map).bindTooltip("Hi");
     });
 </script>
