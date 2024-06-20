@@ -1,5 +1,5 @@
 <?php
-    require "./functions/ns_api.php";
+    require_once "./functions/ns_api.php";
 
     $tracksGeo = GetTrainTracksGeo();
     $disruptions = GetTrainDisruptions();

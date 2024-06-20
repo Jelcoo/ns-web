@@ -1,5 +1,5 @@
 <?php
-    require "./functions/env.php";
+    require_once "./functions/env.php";
 
     if (getenv("DEBUG") == "true") {
         error_reporting(E_ALL);
