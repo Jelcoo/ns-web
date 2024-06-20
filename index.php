@@ -19,6 +19,8 @@
 
         <link rel="stylesheet" href="assets/css/style.css" />
 
+        <script src="assets/js/utils.js"></script>
+
         <!-- Leaflet -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
             integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -30,6 +32,7 @@
     <body>
         <?php require './components/navbar.php'; ?>
         <main>
+            <?php require './components/dateselector.php'; ?>
             <section id="disruptions">
                  <section id="disruptions_list">
  

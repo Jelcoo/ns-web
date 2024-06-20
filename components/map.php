@@ -4,10 +4,15 @@
 
     $tracksGeo = GetTrainTracksGeo();
 
-    if (!isset($_GET['start']) || !isset($_GET['end'])) {
-        $disruptions = GetActiveTrainDisruptions();
-    } else {
+    if (
+        isset($_GET['start']) &&
+        isset($_GET['end']) &&
+        isset($_GET['display']) &&
+        ($_GET['display'] == "single_date" || $_GET['display'] == "range"))
+    {
         $disruptions = GetTrainDisruptionsBetween($_GET['start'], $_GET['end']);
+    } else {
+        $disruptions = GetActiveTrainDisruptions();
     }
 ?>
 
@@ -56,6 +61,8 @@
                 });
 
                 const featureCoords = feature.geometry.coordinates;
+                if (featureCoords.length < 1) return;
+
                 const middleCoords = featureCoords[Math.floor(featureCoords.length / 2)];
                 L.marker(middleCoords.reverse(), {
                     riseOnHover: true,
