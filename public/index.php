@@ -1,4 +1,6 @@
 <?php
+    chdir(__DIR__."/..");
+
     require_once "./functions/env.php";
 
     if (getenv("DEBUG") == "true") {
@@ -32,10 +34,9 @@
     <body>
         <?php require './components/navbar.php'; ?>
         <main>
-            <?php require './components/dateselector.php'; ?>
             <section id="disruptions">
                  <section id="disruptions_list">
- 
+
                  </section>
                  <section id="disruptions_map">
                      <?php require './components/map.php'; ?>
