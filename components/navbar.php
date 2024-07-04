@@ -1,7 +1,7 @@
 <nav>
     <a href="/">Live</a>
-    <a href="/history">History</a>
-    <a href="/statistics">Statistics</a>
+    <a href="/history.php">History</a>
+    <a href="/statistics.php">Statistics</a>
 </nav>
 
 <script>
