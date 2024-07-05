@@ -47,7 +47,7 @@
             L.marker([train.lat, train.lng], {
                 riseOnHover: true,
                 icon: trainIcon
-            }).addTo(tainsLayer);
+            }).addTo(tainsLayer).bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
         });
     });
 </script>
