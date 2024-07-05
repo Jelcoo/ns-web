@@ -1,5 +1,6 @@
 <nav>
     <a href="/">Live</a>
+    <a href="/trains.php">Trains</a>
     <a href="/history.php">History</a>
     <a href="/statistics.php">Statistics</a>
 </nav>

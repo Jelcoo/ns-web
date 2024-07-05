@@ -24,3 +24,12 @@ function GetTrainTracksGeo() {
 
     return $data;
 }
+
+function GetTrainPositions() {
+    $ch = InitCurl("https://gateway.apiportal.ns.nl/virtual-train-api/api/vehicle");
+
+    $json = curl_exec($ch);
+    $data = json_decode($json, true);
+
+    return $data;
+}

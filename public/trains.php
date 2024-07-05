@@ -30,16 +30,16 @@
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
+
+        <!-- Socket.io -->
+        <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
     </head>
     <body>
         <?php require './components/navbar.php'; ?>
         <main>
-            <section id="disruptions">
-                 <section id="disruptions_list">
-                    <?php require './components/disruptions_display.php'; ?>
-                 </section>
-                 <section id="disruptions_map">
-                     <?php require './components/map.php'; ?>
+            <section id="tains">
+                 <section id="tains_map">
+                     <?php require './components/trainmap.php'; ?>
                 </section>
             </section>
         </main>
