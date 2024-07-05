@@ -67,7 +67,7 @@
                 L.marker(middleCoords.reverse(), {
                     riseOnHover: true,
                     icon: typeIcon
-                }).addTo(map).bindTooltip(`${disrupt.cause}\n${disrupt.timeStart}`);
+                }).addTo(map).bindTooltip(`${disrupt.cause}<br>${disrupt.timeStart}`);
             })
         });
     });
