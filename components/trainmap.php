@@ -73,8 +73,10 @@
 
                 trainMarkers.push({ treinNummer: train.treinNummer, marker: marker });
             } else {
-                existingMarker.marker.setLatLng([train.lat, train.lng]);
-                existingMarker.marker.bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
+                if (existingMarker.marker.getLatLng().lat !== train.lat || existingMarker.marker.getLatLng().lng !== train.lng) {
+                    existingMarker.marker.setLatLng([train.lat, train.lng]);
+                    existingMarker.marker.bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
+                }
             }
         });
 
