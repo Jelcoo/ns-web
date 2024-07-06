@@ -44,6 +44,8 @@
     const tainsLayer = L.layerGroup().addTo(map);
     const trainMarkers = [];
 
+    const focussedTrain = getUrlQuery('trein');
+
     const socket = io("wss://nsws.jelco.xyz", {
         transports: ['websocket']
     });
@@ -62,7 +64,11 @@
                 marker.addTo(tainsLayer)
                     .bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`)
                     .on('click', function(e) {
-                        setUrlQuery(['trein', train.treinNummer]);
+                        if (focussedTrain) {
+                            removeUrlQuery(['trein']);
+                        } else {
+                            setUrlQuery(['trein', train.treinNummer]);
+                        }
                     });
 
                 trainMarkers.push({ treinNummer: train.treinNummer, marker: marker });
@@ -71,5 +77,12 @@
                 existingMarker.marker.bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
             }
         });
+
+        if (focussedTrain) {
+            const trainMarker = trainMarkers.find(marker => marker.treinNummer === parseInt(focussedTrain));
+            if (trainMarker) {
+                map.setView(trainMarker.marker.getLatLng(), 13);
+            }
+        }
     });
 </script>

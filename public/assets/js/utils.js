@@ -16,5 +16,6 @@ function removeUrlQuery(keys) {
     for (const key of keys) {
         urlParams.delete(key);
     }
+
     window.location.search = urlParams.toString();
 }
