@@ -69,7 +69,7 @@
                 marker.addTo(tainsLayer)
                     .bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`)
                     .on('click', function(e) {
-                        if (focussedTrain) {
+                        if (focussedTrain === train.treinNummer) {
                             removeUrlQuery(['trein']);
                             focussedTrainZoom = defaultFocussedTrainZoom;
                         } else {
