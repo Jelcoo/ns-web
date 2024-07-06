@@ -28,8 +28,14 @@
         }).addTo(map);
     });
 
-    const trainIcon = L.icon({
-        iconUrl: 'assets/img/icon/exclamation.svg',
+    const sprinterIcon = L.icon({
+        iconUrl: 'assets/img/icon/sprinter.svg',
+    
+        iconSize: [25, 30],
+        popupAnchor: [0, 0]
+    });
+    const icIcon = L.icon({
+        iconUrl: 'assets/img/icon/intercity.svg',
     
         iconSize: [25, 30],
         popupAnchor: [0, 0]
@@ -52,7 +58,7 @@
             if (!marker) {
                 const marker = L.marker([train.lat, train.lng], {
                     riseOnHover: true,
-                    icon: trainIcon
+                    icon: train.type === 'SPR' ? sprinterIcon : icIcon
                 });
                 marker.addTo(tainsLayer).bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
                 trainMarkers.push(marker);

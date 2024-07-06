@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(28, 64, 116);" cx="250" cy="250" rx="250" ry="250" transform="matrix(0.9999999999999999, 0, 0, 0.9999999999999999, 0, 0)"/>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 28px; white-space: pre;" transform="matrix(6.230084896087646, 0, 0, 6.467741012573242, -574.460039092899, -1009.9886775609446)" x="103.549" y="204.51">SPR</text>
+</svg>
