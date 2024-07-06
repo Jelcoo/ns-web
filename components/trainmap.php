@@ -36,6 +36,7 @@
     });
 
     const tainsLayer = L.layerGroup().addTo(map);
+    const trainMarkers = [];
 
     const socket = io("wss://nsws.jelco.xyz", {
         transports: ['websocket']
@@ -44,10 +45,20 @@
         tainsLayer.clearLayers();
 
         vehicles.payload.treinen.forEach(train => {
-            L.marker([train.lat, train.lng], {
-                riseOnHover: true,
-                icon: trainIcon
-            }).addTo(tainsLayer).bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
+            if (train.type != 'SPR' && train.type != 'IC') return;
+
+            const marker = trainMarkers.find(marker => marker.treinNummer === train.treinNummer);
+
+            if (!marker) {
+                const marker = L.marker([train.lat, train.lng], {
+                    riseOnHover: true,
+                    icon: trainIcon
+                });
+                marker.addTo(tainsLayer).bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
+                trainMarkers.push(marker);
+            } else {
+                marker.setLatLng([train.lat, train.lng]);
+            }
         });
     });
 </script>
