@@ -85,7 +85,12 @@
                         }
                     });
 
-                trainMarkers.push({ treinNummer: train.treinNummer.toString(), marker: marker });
+                trainMarkers.push({
+                    treinNummer: train.treinNummer.toString(),
+                    speed: train.snelheid,
+                    direction: train.richting,
+                    marker: marker
+                });
             } else {
                 const existingLatLng = existingMarker.marker.getLatLng();
                 if (existingLatLng.lat !== train.lat || existingLatLng.lng !== train.lng) {
@@ -102,7 +107,8 @@
         if (focussedTrain) {
             const trainMarker = trainMarkers.find(marker => marker.treinNummer === focussedTrain);
             if (trainMarker) {
-                map.setView(trainMarker.marker.getLatLng(), focussedTrainZoom);
+                const marketLatLng = trainMarker.marker.getLatLng();
+                map.setView(marketLatLng, focussedTrainZoom);
             }
         }
     });
