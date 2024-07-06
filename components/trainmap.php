@@ -29,16 +29,24 @@
     });
 
     const sprinterIcon = L.icon({
-        iconUrl: 'assets/img/icon/sprinter.svg',
-    
         iconSize: [25, 30],
-        popupAnchor: [0, 0]
+        popupAnchor: [0, 0],
+        iconUrl: 'assets/img/icon/sprinter.svg'
+    });
+    const sprinterFocusIcon = L.icon({
+        iconSize: [25, 30],
+        popupAnchor: [0, 0],
+        iconUrl: 'assets/img/icon/sprinter_focused.svg'
     });
     const icIcon = L.icon({
-        iconUrl: 'assets/img/icon/intercity.svg',
-    
         iconSize: [25, 30],
-        popupAnchor: [0, 0]
+        popupAnchor: [0, 0],
+        iconUrl: 'assets/img/icon/intercity.svg'
+    });
+    const icFocusIcon = L.icon({
+        iconSize: [25, 30],
+        popupAnchor: [0, 0],
+        iconUrl: 'assets/img/icon/intercity_focused.svg'
     });
 
     const tainsLayer = L.layerGroup().addTo(map);
@@ -58,7 +66,7 @@
         vehicles.payload.treinen.forEach(train => {
             if (train.type != 'SPR' && train.type != 'IC') return;
 
-            const existingMarker = trainMarkers.find(marker => marker.treinNummer === train.treinNummer);
+            const existingMarker = trainMarkers.find(marker => marker.treinNummer === train.treinNummer.toString());
 
             if (!existingMarker) {
                 const marker = L.marker([train.lat, train.lng], {
@@ -69,7 +77,7 @@
                 marker.addTo(tainsLayer)
                     .bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`)
                     .on('click', function(e) {
-                        if (focussedTrain === train.treinNummer) {
+                        if (focussedTrain === train.treinNummer.toString()) {
                             removeUrlQuery(['trein']);
                             focussedTrainZoom = defaultFocussedTrainZoom;
                         } else {
@@ -77,18 +85,22 @@
                         }
                     });
 
-                trainMarkers.push({ treinNummer: train.treinNummer, marker: marker });
+                trainMarkers.push({ treinNummer: train.treinNummer.toString(), marker: marker });
             } else {
                 const existingLatLng = existingMarker.marker.getLatLng();
                 if (existingLatLng.lat !== train.lat || existingLatLng.lng !== train.lng) {
                     existingMarker.marker.setLatLng([train.lat, train.lng]);
                     existingMarker.marker.bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
                 }
+
+                if (focussedTrain === train.treinNummer.toString()) {
+                    existingMarker.marker.setIcon(train.type === 'SPR' ? sprinterFocusIcon : icFocusIcon);
+                }
             }
         });
 
         if (focussedTrain) {
-            const trainMarker = trainMarkers.find(marker => marker.treinNummer === parseInt(focussedTrain));
+            const trainMarker = trainMarkers.find(marker => marker.treinNummer === focussedTrain);
             if (trainMarker) {
                 map.setView(trainMarker.marker.getLatLng(), focussedTrainZoom);
             }
