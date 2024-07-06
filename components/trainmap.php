@@ -48,22 +48,27 @@
         transports: ['websocket']
     });
     socket.on('vehicles', (vehicles) => {
-        tainsLayer.clearLayers();
-
         vehicles.payload.treinen.forEach(train => {
             if (train.type != 'SPR' && train.type != 'IC') return;
 
-            const marker = trainMarkers.find(marker => marker.treinNummer === train.treinNummer);
+            const existingMarker = trainMarkers.find(marker => marker.treinNummer === train.treinNummer);
 
-            if (!marker) {
+            if (!existingMarker) {
                 const marker = L.marker([train.lat, train.lng], {
                     riseOnHover: true,
                     icon: train.type === 'SPR' ? sprinterIcon : icIcon
                 });
-                marker.addTo(tainsLayer).bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
-                trainMarkers.push(marker);
+
+                marker.addTo(tainsLayer)
+                    .bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`)
+                    .on('click', function(e) {
+                        setUrlQuery(['trein', train.treinNummer]);
+                    });
+
+                trainMarkers.push({ treinNummer: train.treinNummer, marker: marker });
             } else {
-                marker.setLatLng([train.lat, train.lng]);
+                existingMarker.marker.setLatLng([train.lat, train.lng]);
+                existingMarker.marker.bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
             }
         });
     });
