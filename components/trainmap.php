@@ -45,6 +45,11 @@
     const trainMarkers = [];
 
     const focussedTrain = getUrlQuery('trein');
+    const defaultFocussedTrainZoom = 14;
+    let focussedTrainZoom = defaultFocussedTrainZoom;
+    map.on('zoomend', function() {
+        focussedTrainZoom = map.getZoom();
+    });
 
     const socket = io("wss://nsws.jelco.xyz", {
         transports: ['websocket']
@@ -66,6 +71,7 @@
                     .on('click', function(e) {
                         if (focussedTrain) {
                             removeUrlQuery(['trein']);
+                            focussedTrainZoom = defaultFocussedTrainZoom;
                         } else {
                             setUrlQuery(['trein', train.treinNummer]);
                         }
@@ -73,7 +79,8 @@
 
                 trainMarkers.push({ treinNummer: train.treinNummer, marker: marker });
             } else {
-                if (existingMarker.marker.getLatLng().lat !== train.lat || existingMarker.marker.getLatLng().lng !== train.lng) {
+                const existingLatLng = existingMarker.marker.getLatLng();
+                if (existingLatLng.lat !== train.lat || existingLatLng.lng !== train.lng) {
                     existingMarker.marker.setLatLng([train.lat, train.lng]);
                     existingMarker.marker.bindTooltip(`Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`);
                 }
@@ -83,7 +90,7 @@
         if (focussedTrain) {
             const trainMarker = trainMarkers.find(marker => marker.treinNummer === parseInt(focussedTrain));
             if (trainMarker) {
-                map.setView(trainMarker.marker.getLatLng(), 13);
+                map.setView(trainMarker.marker.getLatLng(), focussedTrainZoom);
             }
         }
     });
