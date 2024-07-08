@@ -13,11 +13,11 @@
     const tainsLayer = L.layerGroup().addTo(map);
     const trainMarkers = [];
 
-    const focussedTrain = getUrlQuery('trein');
-    const defaultFocussedTrainZoom = 14;
-    let focussedTrainZoom = defaultFocussedTrainZoom;
+    const focusedTrain = getUrlQuery('trein');
+    const defaultfocusedTrainZoom = 14;
+    let focusedTrainZoom = defaultfocusedTrainZoom;
     map.on('zoomend', function() {
-        focussedTrainZoom = map.getZoom();
+        focusedTrainZoom = map.getZoom();
     });
 
     socket.on('vehicles', (vehicles) => {
@@ -35,9 +35,9 @@
                 marker.addTo(tainsLayer)
                     .bindTooltip(trainToTooltip(train))
                     .on('click', function(e) {
-                        if (focussedTrain === train.treinNummer.toString()) {
+                        if (focusedTrain === train.treinNummer.toString()) {
                             removeUrlQuery(['trein']);
-                            focussedTrainZoom = defaultFocussedTrainZoom;
+                            focusedTrainZoom = defaultfocusedTrainZoom;
                         } else {
                             setUrlQuery(['trein', train.treinNummer]);
                         }
@@ -56,17 +56,17 @@
                     existingMarker.marker.bindTooltip(trainToTooltip(train));
                 }
 
-                if (focussedTrain === train.treinNummer.toString()) {
+                if (focusedTrain === train.treinNummer.toString()) {
                     existingMarker.marker.setIcon(train.type === 'SPR' ? sprinterFocusIcon : train.type === 'IC' ? icFocusIcon : arrivaFocusIcon);
                 }
             }
         });
 
-        if (focussedTrain) {
-            const trainMarker = trainMarkers.find(marker => marker.treinNummer === focussedTrain);
+        if (focusedTrain) {
+            const trainMarker = trainMarkers.find(marker => marker.treinNummer === focusedTrain);
             if (trainMarker) {
                 const marketLatLng = trainMarker.marker.getLatLng();
-                map.setView(marketLatLng, focussedTrainZoom);
+                map.setView(marketLatLng, focusedTrainZoom);
             }
         }
     });
