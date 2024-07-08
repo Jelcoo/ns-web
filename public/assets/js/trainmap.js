@@ -34,5 +34,5 @@ const arrivaIconIcon = L.icon({
 });
 
 function trainToTooltip(train) {
-    return `Type: ${train.type}<br>Snelheid: ${train.snelheid} km/h`;
+    return `Type: ${train.type}<br>Snelheid: ${Math.round(train.snelheid, 0)} km/h`;
 }
