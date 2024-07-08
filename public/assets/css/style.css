@@ -48,6 +48,15 @@ main {
 #trains_map {
     flex: 100%;
 }
+#details {
+    padding: 1rem;
+}
+.detail {
+    display: flex;
+}
+.detail_header {
+    font-weight: bold;
+}
 
 #map {
     height: calc(100vh - 4rem);
