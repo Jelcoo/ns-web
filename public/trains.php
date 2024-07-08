@@ -37,11 +37,24 @@
     <body>
         <?php require './components/navbar.php'; ?>
         <main>
-            <section id="tains">
-                 <section id="tains_map">
+            <section id="trains">
+                 <section id="trains_details">
+                    <?php require './components/trainmap_details.php'; ?>
+                 </section>
+                 <section id="trains_map">
                      <?php require './components/trainmap.php'; ?>
                 </section>
             </section>
+            <script>
+                if (focussedTrain) {
+                    const trainsDetails = document.getElementById('trains_details');
+                    const trainsMap = document.getElementById('trains_map');
+
+                    trainsDetails.style.flex = '20%';
+                    trainsMap.style.flex = '80%';
+                    map.invalidateSize();
+                }
+            </script>
         </main>
     </body>
 </html>

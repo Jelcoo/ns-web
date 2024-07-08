@@ -41,6 +41,14 @@ main {
 #disruptions_map {
     flex: 60%;
 }
+
+#trains {
+    display: flex;
+}
+#trains_map {
+    flex: 100%;
+}
+
 #map {
     height: calc(100vh - 4rem);
 }
