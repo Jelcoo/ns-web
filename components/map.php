@@ -19,7 +19,7 @@
 <script>
     const thunderforestKey = "<?php echo getenv("THUNDERFOREST_KEY") ?>";
     const tracks = <?php echo json_encode($tracksGeo); ?>;
-    const map = makeMap(thunderforestKey, tracks);
+    const map = makeMap(thunderforestKey, 8, 12, tracks);
 
     const disruptions = <?php echo json_encode($disruptions); ?>;
     disruptions.forEach(disrupt => {

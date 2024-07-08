@@ -8,7 +8,7 @@
 <script>
     const thunderforestKey = "<?php echo getenv("THUNDERFOREST_KEY") ?>";
     const tracks = <?php echo json_encode($tracksGeo); ?>;
-    const map = makeMap(thunderforestKey, tracks);
+    const map = makeMap(thunderforestKey, 8, 16, tracks);
 
     const tainsLayer = L.layerGroup().addTo(map);
     const trainMarkers = [];
