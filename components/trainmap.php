@@ -48,6 +48,16 @@
         popupAnchor: [0, 0],
         iconUrl: 'assets/img/icon/intercity_focused.svg'
     });
+    const arrivaIcon = L.icon({
+        iconSize: [25, 30],
+        popupAnchor: [0, 0],
+        iconUrl: 'assets/img/icon/arriva.svg'
+    });
+    const arrivaIconIcon = L.icon({
+        iconSize: [25, 30],
+        popupAnchor: [0, 0],
+        iconUrl: 'assets/img/icon/arriva_focused.svg'
+    });
 
     const tainsLayer = L.layerGroup().addTo(map);
     const trainMarkers = [];
@@ -64,14 +74,14 @@
     });
     socket.on('vehicles', (vehicles) => {
         vehicles.payload.treinen.forEach(train => {
-            if (train.type != 'SPR' && train.type != 'IC') return;
+            if (train.type != 'SPR' && train.type != 'IC' && train.type != 'ARR') return;
 
             const existingMarker = trainMarkers.find(marker => marker.treinNummer === train.treinNummer.toString());
 
             if (!existingMarker) {
                 const marker = L.marker([train.lat, train.lng], {
                     riseOnHover: true,
-                    icon: train.type === 'SPR' ? sprinterIcon : icIcon
+                    icon: train.type === 'SPR' ? sprinterIcon : train.type === 'IC' ? icIcon : arrivaIcon
                 });
 
                 marker.addTo(tainsLayer)
@@ -99,7 +109,7 @@
                 }
 
                 if (focussedTrain === train.treinNummer.toString()) {
-                    existingMarker.marker.setIcon(train.type === 'SPR' ? sprinterFocusIcon : icFocusIcon);
+                    existingMarker.marker.setIcon(train.type === 'SPR' ? sprinterFocusIcon : train.type === 'IC' ? icFocusIcon : arrivaFocusIcon);
                 }
             }
         });

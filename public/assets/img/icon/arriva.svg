@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(51, 203, 215);" cx="250" cy="250" rx="250" ry="250"/>
+  <text style="font-family: Arial, sans-serif; font-size: 28px; white-space: pre;" transform="matrix(6.2300848960876465, 0, 0, 6.467741012573242, -579.2728968154323, -1010.0659940550623)" x="103.549" y="204.51">ARR</text>
+</svg>
