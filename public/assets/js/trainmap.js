@@ -27,7 +27,7 @@ const arrivaIcon = L.icon({
     popupAnchor: [0, 0],
     iconUrl: 'assets/img/icon/arriva.svg'
 });
-const arrivaIconIcon = L.icon({
+const arrivaFocusIcon = L.icon({
     iconSize: [25, 30],
     popupAnchor: [0, 0],
     iconUrl: 'assets/img/icon/arriva_focused.svg'

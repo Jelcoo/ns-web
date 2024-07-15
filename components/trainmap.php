@@ -13,7 +13,7 @@
     const tainsLayer = L.layerGroup().addTo(map);
     const trainMarkers = [];
 
-    const focusedTrain = getUrlQuery('trein');
+    const focusedTrainNr = getUrlQuery('trein');
     const defaultfocusedTrainZoom = 14;
     let focusedTrainZoom = defaultfocusedTrainZoom;
     map.on('zoomend', function() {
@@ -35,7 +35,7 @@
                 marker.addTo(tainsLayer)
                     .bindTooltip(trainToTooltip(train))
                     .on('click', function(e) {
-                        if (focusedTrain === train.treinNummer.toString()) {
+                        if (focusedTrainNr === train.treinNummer.toString()) {
                             removeUrlQuery(['trein']);
                             focusedTrainZoom = defaultfocusedTrainZoom;
                         } else {
@@ -56,14 +56,14 @@
                     existingMarker.marker.bindTooltip(trainToTooltip(train));
                 }
 
-                if (focusedTrain === train.treinNummer.toString()) {
+                if (focusedTrainNr === train.treinNummer.toString()) {
                     existingMarker.marker.setIcon(train.type === 'SPR' ? sprinterFocusIcon : train.type === 'IC' ? icFocusIcon : arrivaFocusIcon);
                 }
             }
         });
 
-        if (focusedTrain) {
-            const trainMarker = trainMarkers.find(marker => marker.treinNummer === focusedTrain);
+        if (focusedTrainNr) {
+            const trainMarker = trainMarkers.find(marker => marker.treinNummer === focusedTrainNr);
             if (trainMarker) {
                 const marketLatLng = trainMarker.marker.getLatLng();
                 map.setView(marketLatLng, focusedTrainZoom);

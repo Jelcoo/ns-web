@@ -49,11 +49,12 @@
                 </section>
             </section>
             <script>
-                if (focussedTrain) {
+                if (focusedTrainNr) {
                     const trainsDetails = document.getElementById('trains_details');
                     const trainsMap = document.getElementById('trains_map');
 
                     trainsDetails.style.flex = '20%';
+                    trainsDetails.style.display = 'block';
                     trainsMap.style.flex = '80%';
                     map.invalidateSize();
                 }

@@ -45,6 +45,9 @@ main {
 #trains {
     display: flex;
 }
+#trains_details {
+    display: none;
+}
 #trains_map {
     flex: 100%;
 }
