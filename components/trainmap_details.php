@@ -36,7 +36,7 @@
             }
         });
 
-        if (focusedTrain && trainJourney) {
+        if (focusedTrain) {
             document.getElementById('detail_ritnr').innerHTML = focusedTrain.treinNummer;
             document.getElementById('detail_speed').innerHTML = `${Math.round(focusedTrain.snelheid, 1)} km/h`;
             document.getElementById('detail_type').innerHTML = focusedTrain.type;

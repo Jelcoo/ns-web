@@ -35,7 +35,7 @@ function GetTrainPositions() {
 }
 
 function GetTrainByRitnr($ritnr) {
-    $ch = InitCurl("https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/journey&train=$ritnr");
+    $ch = InitCurl("https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/journey?train=$ritnr");
 
     $json = curl_exec($ch);
     $data = json_decode($json, true);
