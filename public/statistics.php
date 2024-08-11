@@ -44,4 +44,11 @@
     main {
         padding: 2rem;
     }
+
+    #statistics {
+        display: flex;
+    }
+    #statistic {
+        flex: 50%;
+    }
 </style>

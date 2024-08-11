@@ -62,3 +62,31 @@
         </main>
     </body>
 </html>
+
+<style>
+    #trains {
+        display: flex;
+    }
+    #trains_details {
+        display: none;
+    }
+    #trains_map {
+        flex: 100%;
+    }
+    #details {
+        padding: 1rem;
+    }
+    #close-details {
+        float: right;
+        cursor: pointer;
+        position: relative;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+    }
+    .detail {
+        display: flex;
+    }
+    .detail_header {
+        font-weight: bold;
+    }
+</style>

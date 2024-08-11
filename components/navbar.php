@@ -16,3 +16,26 @@
         }
     });
 </script>
+
+<style>
+    nav {
+        width: 100%;
+        height: 4rem;
+        background-color: #3f3f43;
+    }
+    nav a {
+        display: inline-block;
+        padding: 1rem;
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 2rem;
+    }
+    nav a:hover {
+        color: #868686;
+    }
+    nav a.active {
+        text-decoration: underline;
+    }
+</style>
