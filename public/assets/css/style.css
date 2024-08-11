@@ -54,6 +54,13 @@ main {
 #details {
     padding: 1rem;
 }
+#close-details {
+    float: right;
+    cursor: pointer;
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
 .detail {
     display: flex;
 }

@@ -8,6 +8,7 @@
 ?>
 
 <div id="details">
+    <button id="close-details">Close</button>
     <div class="detail">
         <span class="detail_header">Ritnummer:&nbsp;</span>
         <span id="detail_ritnr"></span>
@@ -46,5 +47,10 @@
                 document.getElementById('detail_materieel').innerHTML = 'Onbekend';
             }
         }
+    });
+
+    const closeButton = document.getElementById('close-details');
+    closeButton.addEventListener('click', () => {
+        removeUrlQuery(['trein']);
     });
 </script>

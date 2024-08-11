@@ -37,7 +37,6 @@
                     .on('click', function(e) {
                         if (focusedTrainNr === train.treinNummer.toString()) {
                             removeUrlQuery(['trein']);
-                            focusedTrainZoom = defaultfocusedTrainZoom;
                         } else {
                             setUrlQuery(['trein', train.treinNummer]);
                         }
