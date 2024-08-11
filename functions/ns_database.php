@@ -41,3 +41,15 @@ function GetDisruptionDates() {
 
     return $result;
 }
+
+function GetStatAffectedStations() {
+    global $conn;
+
+    $query = $conn->prepare("SELECT jt.value AS stationName, COUNT(jt.value) AS frequency FROM disruptions, JSON_TABLE(route, '$[0][*]' COLUMNS (value VARCHAR(255) PATH '$.value')) AS jt WHERE jt.value NOT LIKE 'DISRUPTION' GROUP BY jt.value ORDER BY frequency DESC;");
+    $query->execute();
+    $result = $query->get_result();
+    $result = $result->fetch_all(MYSQLI_ASSOC);
+    $query->close();
+
+    return $result;
+}

@@ -30,6 +30,7 @@ nav a.active {
 
 main {
     background-color: #868686;
+    min-height: calc(100vh - 4rem);
 }
 
 #disruptions {
@@ -84,4 +85,11 @@ img[src*="person-digging"] {
     border: 1px;
     border-radius: 5px;
     padding: 2px !important;
+}
+
+#statistics {
+    display: flex;
+}
+#statistic {
+    flex: 50%;
 }
