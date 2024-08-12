@@ -4,6 +4,8 @@
     $affectedStations = GetStatAffectedStations();
 ?>
 
+<input type="text" id="search" placeholder="Search" />
+
 <table id="frequent-affected-stations">
     <thead>
         <tr>
@@ -19,15 +21,20 @@
 <script>
     const table = document.getElementById('frequent-affected-stations');
     const stations = <?php echo json_encode($affectedStations); ?>;
-    const stationChunks = [];
+    const chunkSize = 25;
     let currentChunk = 0;
 
-    const chunkSize = 25;
-    for (let i = 0; i < stations.length; i += chunkSize) {
-        const chunk = stations.slice(i, i + chunkSize);
-        stationChunks.push(chunk);
-    }
+    let stationChunks = chunkify(stations, chunkSize);
     fillTable(stationChunks[currentChunk]);
+
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value;
+        const filteredStations = search(query, stations);
+        stationChunks = chunkify(filteredStations, chunkSize);
+        currentChunk = 0;
+        fillTable(stationChunks[currentChunk]);
+    });
 
     const backButton = document.getElementById('back');
     const nextButton = document.getElementById('next');
@@ -44,9 +51,16 @@
         }
     });
 
+    function chunkify(data, chunkSize) {
+        const chunks = [];
+        for (let i = 0; i < data.length; i += chunkSize) {
+            chunks.push(data.slice(i, i + chunkSize));
+        }
+        return chunks;
+    }
     function fillTable(chunkData) {
         table.innerHTML = '';
-        chunkData.forEach(station => {
+        chunkData?.forEach(station => {
             const row = table.insertRow();
             const stationName = row.insertCell();
             const frequency = row.insertCell();
@@ -55,6 +69,9 @@
         });
 
         const pageDisplay = document.getElementById('page-display');
-        pageDisplay.innerHTML = `Page ${currentChunk + 1} of ${stationChunks.length}`;
+        pageDisplay.innerHTML = `Page ${currentChunk + 1} of ${Math.max(stationChunks.length, 1)}`;
+    }
+    function search(query, data) {
+        return data.filter(station => station.stationName.toLowerCase().includes(query.toLowerCase()));
     }
 </script>
