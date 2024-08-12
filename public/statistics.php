@@ -47,8 +47,12 @@
 
     #statistics {
         display: flex;
+        gap: 1rem;
     }
     #statistic {
         flex: 50%;
+        background-color: #767676;
+        padding: 1rem;
+        border-radius: 5px;
     }
 </style>
