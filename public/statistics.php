@@ -37,6 +37,9 @@
                 <section id="statistic">
                     <?php require './components/charts/frequent-causes.php'; ?>
                 </section>
+                <section id="statistic">
+                    <?php require './components/charts/most-affected-days.php'; ?>
+                </section>
             </section>
         </main>
     </body>
@@ -52,8 +55,7 @@
         gap: 1rem;
     }
     #statistic {
-        /*flex: 50%;*/
-        width: 24rem;
+        flex: 25%;
         background-color: #767676;
         padding: 1rem;
         border-radius: 5px;

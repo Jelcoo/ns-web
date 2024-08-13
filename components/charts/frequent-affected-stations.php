@@ -23,41 +23,17 @@
 </table>
 
 <script>
-    const affectedStationsTableKeys = ['stationName', 'frequency'];
-    const affectedStationsTable = document.getElementById('frequent-affected-stations');
-    const stationPageDisplay = document.getElementById("station-page-display");
-    const stations = <?php echo json_encode($affectedStations); ?>;
-    const stationChunkSize = 25;
-    let currentStationChunk = 0;
+    (function() {
+        const elements = {
+            table: document.getElementById('frequent-affected-stations'),
+            pageDisplay: document.getElementById('station-page-display'),
+            search: document.getElementById('stationSearch'),
+            back: document.getElementById('station-back'),
+            next: document.getElementById('station-next')
+        };
+        const tableCols = ['stationName', 'frequency'];
+        const data = <?php echo json_encode($affectedStations); ?>;
 
-    let stationChunks = chunkify(stations, stationChunkSize);
-    fillAffectedStations();
-
-    const stationSearchInput = document.getElementById('stationSearch');
-    stationSearchInput.addEventListener('input', () => {
-        const query = stationSearchInput.value;
-        const filteredStations = search(query, stations);
-        stationChunks = chunkify(filteredStations, stationChunkSize);
-        currentStationChunk = 0;
-        fillAffectedStations();
-    });
-
-    const stationBackButton = document.getElementById('station-back');
-    const stationNextButton = document.getElementById('station-next');
-    stationBackButton.addEventListener('click', () => {
-        if (currentStationChunk > 0) {
-            currentStationChunk--;
-            fillAffectedStations();
-        }
-    });
-    stationNextButton.addEventListener('click', () => {
-        if (currentStationChunk < stationChunks.length - 1) {
-            currentStationChunk++;
-            fillAffectedStations();
-        }
-    });
-
-    function fillAffectedStations() {
-        fillTable(affectedStationsTable, stationChunks, currentStationChunk, affectedStationsTableKeys, stationPageDisplay);
-    }
+        initTable(elements, tableCols, data);
+    })();
 </script>

@@ -57,8 +57,19 @@ function GetStatAffectedStations() {
 function GetStatCauses() {
     global $conn;
 
-    $query = $conn->prepare("SELECT `cause`, COUNT(`cause`) AS frequency FROM `disruptions` GROUP BY `cause` ORDER BY frequency DESC;
-");
+    $query = $conn->prepare("SELECT `cause`, COUNT(`cause`) AS frequency FROM `disruptions` GROUP BY `cause` ORDER BY frequency DESC;");
+    $query->execute();
+    $result = $query->get_result();
+    $result = $result->fetch_all(MYSQLI_ASSOC);
+    $query->close();
+
+    return $result;
+}
+
+function GetStatMostAffectedDay() {
+    global $conn;
+
+    $query = $conn->prepare("SELECT DATE(timeStart) AS date, COUNT(*) AS frequency FROM `disruptions` GROUP BY DATE(timeStart) ORDER BY `frequency` DESC;");
     $query->execute();
     $result = $query->get_result();
     $result = $result->fetch_all(MYSQLI_ASSOC);

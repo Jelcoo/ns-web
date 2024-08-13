@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<table id="frequent-affected-causes">
+<table id="frequent-causes">
     <thead>
         <tr>
             <th>Cause</th>
@@ -23,41 +23,17 @@
 </table>
 
 <script>
-    const affectedCausesTableKeys = ['cause', 'frequency'];
-    const affectedCausesTable = document.getElementById('frequent-affected-causes');
-    const causePageDisplay = document.getElementById("cause-page-display");
-    const causes = <?php echo json_encode($causes); ?>; 
-    const causeChunkSize = 25;
-    let currentCauseChunk = 0;
+    (function() {
+        const elements = {
+            table: document.getElementById('frequent-causes'),
+            pageDisplay: document.getElementById('cause-page-display'),
+            search: document.getElementById('causeSearch'),
+            back: document.getElementById('cause-back'),
+            next: document.getElementById('cause-next')
+        };
+        const tableCols = ['cause', 'frequency'];
+        const data = <?php echo json_encode($causes); ?>;
 
-    let causesChunks = chunkify(causes, causeChunkSize);
-    fillCauses();
-
-    const causeSearchInput = document.getElementById('causeSearch');
-    causeSearchInput.addEventListener('input', () => {
-        const query = causeSearchInput.value;
-        const filteredCauses = search(query, causes);
-        causesChunks = chunkify(filteredCauses, causeChunkSize);
-        currentCauseChunk = 0;
-        fillCauses();
-    });
-
-    const causeBackButton = document.getElementById('cause-back');
-    const causeNextButton = document.getElementById('cause-next');
-    causeBackButton.addEventListener('click', () => {
-        if (currentCauseChunk > 0) {
-            currentCauseChunk--;
-            fillCauses();
-        }
-    });
-    causeNextButton.addEventListener('click', () => {
-        if (currentCauseChunk < causesChunks.length - 1) {
-            currentCauseChunk++;
-            fillCauses();
-        }
-    });
-
-    function fillCauses() {
-        fillTable(affectedCausesTable, causesChunks, currentCauseChunk, affectedCausesTableKeys, causePageDisplay);
-    }
+        initTable(elements, tableCols, data);
+    })();
 </script>
