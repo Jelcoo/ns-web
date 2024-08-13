@@ -4,12 +4,12 @@
     $affectedStations = GetStatAffectedStations();
 ?>
 
-<input type="text" id="search" placeholder="Search" />
-<div id="page-selectors">
-    <span id="page-display"></span>
-    <div id="page-buttons">
-        <button id="back">< Back</button>
-        <button id="next">Next ></button>
+<input type="text" class="search" id="stationSearch" placeholder="Search" />
+<div class="page-selectors">
+    <span class="page-display" id="station-page-display"></span>
+    <div class="page-buttons">
+        <button class="page-button" id="station-back">< Back</button>
+        <button class="page-button" id="station-next">Next ></button>
     </div>
 </div>
 
@@ -23,100 +23,41 @@
 </table>
 
 <script>
-    const table = document.getElementById('frequent-affected-stations');
+    const affectedStationsTableKeys = ['stationName', 'frequency'];
+    const affectedStationsTable = document.getElementById('frequent-affected-stations');
+    const stationPageDisplay = document.getElementById("station-page-display");
     const stations = <?php echo json_encode($affectedStations); ?>;
-    const chunkSize = 25;
-    let currentChunk = 0;
+    const stationChunkSize = 25;
+    let currentStationChunk = 0;
 
-    let stationChunks = chunkify(stations, chunkSize);
-    fillTable(stationChunks[currentChunk]);
+    let stationChunks = chunkify(stations, stationChunkSize);
+    fillAffectedStations();
 
-    const searchInput = document.getElementById('search');
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value;
+    const stationSearchInput = document.getElementById('stationSearch');
+    stationSearchInput.addEventListener('input', () => {
+        const query = stationSearchInput.value;
         const filteredStations = search(query, stations);
-        stationChunks = chunkify(filteredStations, chunkSize);
-        currentChunk = 0;
-        fillTable(stationChunks[currentChunk]);
+        stationChunks = chunkify(filteredStations, stationChunkSize);
+        currentStationChunk = 0;
+        fillAffectedStations();
     });
 
-    const backButton = document.getElementById('back');
-    const nextButton = document.getElementById('next');
-    backButton.addEventListener('click', () => {
-        if (currentChunk > 0) {
-            currentChunk--;
-            fillTable(stationChunks[currentChunk]);
+    const stationBackButton = document.getElementById('station-back');
+    const stationNextButton = document.getElementById('station-next');
+    stationBackButton.addEventListener('click', () => {
+        if (currentStationChunk > 0) {
+            currentStationChunk--;
+            fillAffectedStations();
         }
     });
-    nextButton.addEventListener('click', () => {
-        if (currentChunk < stationChunks.length - 1) {
-            currentChunk++;
-            fillTable(stationChunks[currentChunk]);
+    stationNextButton.addEventListener('click', () => {
+        if (currentStationChunk < stationChunks.length - 1) {
+            currentStationChunk++;
+            fillAffectedStations();
         }
     });
 
-    function chunkify(data, chunkSize) {
-        const chunks = [];
-        for (let i = 0; i < data.length; i += chunkSize) {
-            chunks.push(data.slice(i, i + chunkSize));
-        }
-        return chunks;
-    }
-    function fillTable(chunkData) {
-        for (let i = table.rows.length - 1; i > 0; i--) {
-            table.deleteRow(i);
-        }
-        chunkData?.forEach(station => {
-            const row = table.insertRow();
-            const stationName = row.insertCell();
-            const frequency = row.insertCell();
-            stationName.innerHTML = station.stationName;
-            frequency.innerHTML = station.frequency;
-        });
-
-        const pageDisplay = document.getElementById('page-display');
-        pageDisplay.innerHTML = `Page <strong>${currentChunk + 1}</strong> of <strong>${Math.max(stationChunks.length, 1)}</strong>`;
-    }
-    function search(query, data) {
-        return data.filter(station => station.stationName.toLowerCase().includes(query.toLowerCase()));
+    function fillAffectedStations() {
+        fillTable(affectedStationsTable, stationChunks, currentStationChunk, affectedStationsTableKeys, stationPageDisplay);
     }
 </script>
-
-<style>
-    span, th, td {
-        color: #ffffff;
-    }
-
-    #search {
-        width: 100%;
-        padding: 0.5rem;
-        box-sizing: border-box;
-        border: none;
-        border-radius: 5px;
-        margin-bottom: 0.5rem;
-    }
-    #page-selectors {
-        text-align: center;
-        margin-bottom: 0.5rem;
-    }
-    #page-buttons {
-        margin-top: 0.2rem;
-    }
-    #back, #next {
-        padding: 0.2rem 1rem;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th:first-child, td:first-child {
-        text-align: left;
-    }
-    th:last-child, td:last-child {
-        text-align: right;
-    }
-</style>
