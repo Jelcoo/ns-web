@@ -29,6 +29,7 @@ function search(query, data) {
                 value = value.toString();
             }
             if (value.toLowerCase().includes(query.toLowerCase())) {
+                if (!matched.includes(key))
                 matched.push(key);
             }
         });
