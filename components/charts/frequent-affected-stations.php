@@ -5,6 +5,13 @@
 ?>
 
 <input type="text" id="search" placeholder="Search" />
+<div id="page-selectors">
+    <span id="page-display"></span>
+    <div id="page-buttons">
+        <button id="back">< Back</button>
+        <button id="next">Next ></button>
+    </div>
+</div>
 
 <table id="frequent-affected-stations">
     <thead>
@@ -14,9 +21,6 @@
         </tr>
     </thead>
 </table>
-<span id="page-display"></span>
-<button id="back">< Back</button>
-<button id="next">Next ></button>
 
 <script>
     const table = document.getElementById('frequent-affected-stations');
@@ -59,7 +63,9 @@
         return chunks;
     }
     function fillTable(chunkData) {
-        table.innerHTML = '';
+        for (let i = table.rows.length - 1; i > 0; i--) {
+            table.deleteRow(i);
+        }
         chunkData?.forEach(station => {
             const row = table.insertRow();
             const stationName = row.insertCell();
@@ -69,9 +75,48 @@
         });
 
         const pageDisplay = document.getElementById('page-display');
-        pageDisplay.innerHTML = `Page ${currentChunk + 1} of ${Math.max(stationChunks.length, 1)}`;
+        pageDisplay.innerHTML = `Page <strong>${currentChunk + 1}</strong> of <strong>${Math.max(stationChunks.length, 1)}</strong>`;
     }
     function search(query, data) {
         return data.filter(station => station.stationName.toLowerCase().includes(query.toLowerCase()));
     }
 </script>
+
+<style>
+    span, th, td {
+        color: #ffffff;
+    }
+
+    #search {
+        width: 100%;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
+    }
+    #page-selectors {
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+    #page-buttons {
+        margin-top: 0.2rem;
+    }
+    #back, #next {
+        padding: 0.2rem 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th:first-child, td:first-child {
+        text-align: left;
+    }
+    th:last-child, td:last-child {
+        text-align: right;
+    }
+</style>

@@ -50,7 +50,8 @@
         gap: 1rem;
     }
     #statistic {
-        flex: 50%;
+        /*flex: 50%;*/
+        width: 24rem;
         background-color: #767676;
         padding: 1rem;
         border-radius: 5px;
