@@ -37,4 +37,3 @@
         initTable(elements, tableCols, data);
     })();
 </script>
-

@@ -60,6 +60,14 @@
         padding: 1rem;
         border-radius: 5px;
     }
+    @media screen and (max-width: 768px) {
+        #statistics {
+            display: block;
+        }
+        #statistic {
+            margin-top: 1rem;
+        }
+    }
 
     span, th, td {
         color: #ffffff;

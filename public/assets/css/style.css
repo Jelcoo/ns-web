@@ -12,6 +12,11 @@ main {
     min-height: calc(100vh - 4rem);
 }
 
+@media screen and (max-width: 768px) {
+    #disruptions {
+        flex-direction: column;
+    }
+}
 #disruptions {
     display: flex;
 }

@@ -32,6 +32,15 @@
         font-weight: bold;
         line-height: 2rem;
     }
+    @media screen and (max-width: 768px) {
+        nav {
+            height: 3rem;
+        }
+        nav a {
+            font-size: 1.2rem;
+            line-height: 1rem;
+        }
+    }
     nav a:hover {
         color: #868686;
     }
