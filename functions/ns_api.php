@@ -5,7 +5,11 @@ function InitCurl($url) {
     
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Ocp-Apim-Subscription-Key: ' . getenv("NS_SUBSCRIPTION_KEY")));
+    curl_setopt($ch, CURLOPT_USERAGENT, "curl/8.17.0");
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Ocp-Apim-Subscription-Key: ' . getenv("NS_SUBSCRIPTION_KEY"),
+        'Accept' => 'application/json'
+    ]);
 
     return $ch;
 }
